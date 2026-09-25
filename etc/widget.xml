@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:helloworld:Magento_Widget:etc/widget.xsd">
+	<widget class="SmartCustomer\Reviews\Block\Widget\ProductRating" id="smartcustomer_widget_product_rating">
+		<label>SmartCustomer's Product Rating</label>
+		<description>Display a product's average rating and number of reviews.</description>
+		<parameters>
+			<parameter name="horizontal_align" xsi:type="select" required="true" visible="true" sort_order="10">
+				<label>Horizontal align</label>
+				<options>
+                    <option name="left" value="left">
+                        <label>Left</label>
+                    </option>
+                    <option name="center" value="Center" selected="true">
+                        <label>Center</label>
+                    </option>
+                    <option name="right" value="Right">
+                        <label>Right</label>
+                    </option>
+                </options>
+			</parameter>
+		</parameters>
+	</widget>
+	<widget class="SmartCustomer\Reviews\Block\Widget\ProductReviews" id="smartcustomer_widget_product_reviews">
+		<label>SmartCustomer's Product Reviews</label>
+		<description>Display and allow users to submit product reviews directly on your website.</description>
+		<parameters>
+			<parameter name="brand_attr_code" xsi:type="text" required="true" visible="true" sort_order="10">
+				<label>Brand's attribute code</label>
+				<value>manufacturer</value>
+			</parameter>
+		</parameters>
+	</widget>
+</widgets>

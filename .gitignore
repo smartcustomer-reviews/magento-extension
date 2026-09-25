@@ -1,0 +1,10 @@
+/vendor/
+/composer.lock
+/auth.json
+/.env
+/.env.*
+/.phpunit.result.cache
+/coverage/
+/.idea/
+/.vscode/
+*.log

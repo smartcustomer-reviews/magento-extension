@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <sitejabber>
+            <reviews>
+                <active>0</active>
+            </reviews>
+        </sitejabber>
+        <sitejabber_widgets>
+            <instant_feedback>
+                <instant_feedback_max_tags>3</instant_feedback_max_tags>
+            </instant_feedback>
+        </sitejabber_widgets>
+    </default>
+</config>

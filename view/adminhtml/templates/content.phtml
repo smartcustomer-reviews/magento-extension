@@ -1,0 +1,4 @@
+<?php if (!empty($block->getAccessToken())) { ?>
+<a href="<?= $escaper->escapeUrl($block->getEndpointUrl()) ?>?domain=<?= $escaper->escapeUrl($block->getBaseUrl()) ?>&action=access&access_token=<?= $escaper->escapeUrl($block->getAccessToken()) ?>&sync=<?= $escaper->escapeUrl($block->getSyncCallbackUrl()) ?>">Access SmartCustomer</a><br />
+<a href="<?= $escaper->escapeUrl($block->getEndpointUrl()) ?>?domain=<?= $escaper->escapeUrl($block->getBaseUrl()) ?>&action=uninstall&access_token=<?= $escaper->escapeUrl($block->getAccessToken()) ?>&redirect=<?= $escaper->escapeUrl($block->getUninstallCallbackUrl()) ?>">Uninstall</a>
+<?php } ?>

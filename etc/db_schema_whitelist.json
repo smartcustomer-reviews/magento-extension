@@ -1,0 +1,23 @@
+{
+    "smartcustomer_reviews_outbox": {
+        "column": {
+            "entity_id": true,
+            "order_id": true,
+            "store_id": true,
+            "status": true,
+            "attempts": true,
+            "available_at": true,
+            "created_at": true,
+            "updated_at": true,
+            "processed_at": true,
+            "last_error": true
+        },
+        "index": {
+            "SMARTCUSTOMER_REVIEWS_OUTBOX_STATUS_AVAILABLE_AT": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "SMARTCUSTOMER_REVIEWS_OUTBOX_ORDER_ID": true
+        }
+    }
+}

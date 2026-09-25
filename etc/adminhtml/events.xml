@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="adminhtml_block_html_before">
+        <observer name="smartcustomer_reviews_menu_observer" instance="SmartCustomer\Reviews\Model\MenuObserver" />
+    </event>
+	<event name="admin_system_config_changed_section_smartcustomer">
+        <observer name="smartcustomer_reviews_config_observer" instance="SmartCustomer\Reviews\Model\ConfigObserver"/>
+    </event>
+	<event name="admin_system_config_changed_section_smartcustomer_widgets">
+        <observer name="smartcustomer_widgets_config_observer" instance="SmartCustomer\Reviews\Model\ConfigObserver"/>
+    </event>
+</config>

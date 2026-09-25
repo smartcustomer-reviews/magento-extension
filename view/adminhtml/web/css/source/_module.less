@@ -1,0 +1,15 @@
+@webkulmodulename-icons-admin__font-name-path: '@{baseDir}SmartCustomer_Reviews/fonts/icon';
+@webkulmodulename-icons-admin__font-name : 'SmartCustomer_Reviews';
+.lib-font-face(
+    @family-name: @webkulmodulename-icons-admin__font-name,
+    @font-path: @webkulmodulename-icons-admin__font-name-path,
+    @font-weight: normal,
+    @font-style: normal
+);
+.admin__menu #menu-smartcustomer-reviews-index.parent.level-0 > a:before {
+    content: "\0041";
+    font-family: @webkulmodulename-icons-admin__font-name;
+    font-size: 2.6rem;
+    position: relative;
+    top: -0.7rem;
+}

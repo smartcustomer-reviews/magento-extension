@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="sitejabber" translate="label" sortOrder="10">
+			<label>SmartCustomer</label>
+		</tab>
+		<section id="sitejabber" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+			<class>separator-top</class>
+			<label>Configuration</label>
+			<tab>sitejabber</tab>
+			<resource>SmartCustomer_Reviews::index</resource>
+			<group id="reviews" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label><![CDATA[SmartCustomer Configurations <div style="float:right;margin:0 20px;font-weight:normal;line-height:23px;font-size:1.2rem;">ver. 0.5.0</div>]]></label>
+				<comment><![CDATA[
+					<p>To complete the installation, enter your Client ID and Client Encryption Key in the fields below and save your configuration.</p>
+						<p>If you need help, <a href="https://www.smartcustomer.com/business/contact" target="_blank" title="contact us">contact us</a> for assistance.</p>
+						<p style="font-size:18px;">Don&rsquo;t have an Client ID? Create an account or log in <a style="font-size:18px;" href="https://biz.smartcustomer.com/registration?utm_source=magento&utm_medium=link&utm_campaign=admin" target="_blank" title="Create an account or log in">here</a>.</p>
+				]]></comment>
+				<field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="api_key" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Client ID</label>
+					<validate>required-entry</validate>
+					<comment><![CDATA[Get your Client ID on the <a href="https://biz.smartcustomer.com/account" target="_blank" title="Create an account or log in">account page</a>.]]></comment>                    
+				</field>
+				<field id="api_secret" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Client Encryption Key</label>
+					<validate>required-entry</validate>
+					<comment><![CDATA[Get your Client Encryption Key on the <a href="https://biz.smartcustomer.com/account" target="_blank" title="Create an account or log in">account page</a>.]]></comment>     
+				</field>
+				<field id="active" translate="label" type="select" sortOrder="4" showInDefault="0" showInWebsite="0" showInStore="0">
+					<label>Active</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+			</group>
+		</section>
+		<section id="sitejabber_widgets" translate="label" sortOrder="131" showInDefault="1" showInWebsite="1" showInStore="1">
+			<class>separator-top</class>
+			<label>Widgets</label>
+			<tab>sitejabber</tab>
+			<resource>SmartCustomer_Reviews::index</resource>
+			<group id="instant_feedback" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label><![CDATA[Instant Feedback]]></label>
+				<comment><![CDATA[
+					<p>Ask customers for instant feedback about their shopping experience at their happiest moment.</p>
+						<p>If you do not have access to the widget, <a href="https://www.smartcustomer.com/business/pricing" target="_blank" title="request a free demo">request a free demo</a>.</p>
+				]]></comment>
+				<field id="instant_feedback_enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="instant_feedback_max_tags" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Max. number of tags</label>
+					<source_model>SmartCustomer\Reviews\Model\Config\Source\MaxNoTags</source_model>
+				</field>
+			</group>
+			<group id="product_rating" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label><![CDATA[Product Rating]]></label>
+				<comment><![CDATA[
+					<p>Display a product average rating and number of reviews.</p>
+				]]></comment>
+				<field id="product_rating_enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+			</group>
+			<group id="product_reviews" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label><![CDATA[Product Reviews]]></label>
+				<comment><![CDATA[
+					<p>Display and allow users to submit product reviews directly on your website.</p>
+				]]></comment>
+				<field id="product_reviews_enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

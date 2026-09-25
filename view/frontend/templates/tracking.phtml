@@ -1,0 +1,17 @@
+<?php if ($block->isIstantFeedbackEnabled()) { ?>
+<div class="stjr-instant-feedback"></div>
+<script>document.querySelector("body").addEventListener("STJRV2.instantFeedbackWidgetLoaded",(function(){
+    STJRV2.setConfig({language:'en',user:{first_name:'<?= $escaper->escapeJs($block->getCustomerFirstName() ?? '') ?>',last_name:'<?= $escaper->escapeJs($block->getCustomerLastName() ?? '') ?>',email:'<?= $escaper->escapeJs($block->getCustomerEmail() ?? '') ?>'},products: [<?php foreach ($block->getProducts() as $product) { ?>{categories:'<?= $escaper->escapeJs($block->getProductCategories($product) ?? '') ?>',currency:'<?= $escaper->escapeJs($block->getOrderCurrencyCode() ?? '') ?>',images:'<?= $escaper->escapeJs($block->getProductImage($product) ?? '') ?>',price:'<?= $escaper->escapeJs($product->getPrice() ?? '') ?>',product_link:'<?= $escaper->escapeJs($product->getProduct()->getProductUrl() ?? '') ?: "'+location.href+'" ?>',sku:'<?= $escaper->escapeJs($product->getSku() ?? '') ?>',item_group:'<?= $escaper->escapeJs($block->getItemGroup($product) ?? '') ?>',title:'<?= $escaper->escapeJs($product->getName() ?? '') ?>',},<?php } ?>],order_id:'<?= $escaper->escapeJs($block->getOrderId() ?? '') ?>'})})
+);</script>
+<script>(function(d,s,id,c){var js,rC=[],uRC=[],r=0;Array.from(document.querySelectorAll('[class*="stjr-"]')).forEach(r=>{rC=[...rC,...Array.from(r.classList).filter((cl)=>{return /^stjr-/.test(cl);})]});uRC=[...new Set(rC)];t=d.getElementsByTagName(s)[0];js=d.createElement(s);js.id=id;js.src='<?= $escaper->escapeUrl($block->getWidgetDomain()) ?>/js/v2/<?= $escaper->escapeUrl($block->getApiKey()) ?>/widgets.js'+(uRC.length ? '?widget-classes=' + uRC.join("|") : '?widget-classes=stjr-base')+'';js.onload=js.onreadystatechange=function(){if(!r&&(!this.readyState||this.readyState[0]=='c')){r=1;c();}};t.parentNode.insertBefore(js,t);}(document,'script','sj-widget',function(){}));</script>
+<?php } ?>
+<script>
+sitejabberTrackConversionData = {
+    appKey: "<?= $escaper->escapeHtml($block->getApiKey()) ?>",
+    currency: "<?= $escaper->escapeHtml($block->getOrderCurrencyCode()) ?>",
+    orderId: "<?= $escaper->escapeHtml($block->getOrderId()) ?>",
+    subtotal: "<?= $escaper->escapeHtml($block->getOrderSubtotal()) ?>",
+    taxes: "<?= $escaper->escapeHtml($block->getOrderTaxes()) ?>",
+    total: "<?= $escaper->escapeHtml($block->getOrderTotal()) ?>"
+}
+</script>

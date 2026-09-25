@@ -1,0 +1,5 @@
+<?php if ($block->isProductRatingEnabled()) { ?>
+<script>(function(d,s,id){var js,r=0,t=d.getElementsByTagName(s)[0];if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src='<?= $escaper->escapeUrl($block->getWidgetDomain()) ?>/js/v2/<?= $escaper->escapeHtmlAttr($block->getApiKey()) ?>/widgets.js';t.parentNode.insertBefore(js,t);}(document,'script','sj-widget'));</script>
+<style>.stjr-product-rating-widget-container__inner{justify-content:<?= $escaper->escapeHtmlAttr($block->getAlign()) ?>}</style>
+<div class="stjr-product-rating" data-product-id="<?= $escaper->escapeHtmlAttr($block->getProductId()) ?>" data-item-group="<?= $escaper->escapeHtmlAttr($block->getProductGroup()) ?>"></div>
+<?php } ?>

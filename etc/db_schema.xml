@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="smartcustomer_reviews_outbox" resource="default" engine="innodb"
+           comment="SmartCustomer Reviews Order Outbox">
+        <column xsi:type="bigint" name="entity_id" unsigned="true" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="int" name="order_id" unsigned="true" nullable="false" identity="false"
+                comment="Magento Order Entity ID"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" identity="false"
+                comment="Magento Store ID"/>
+        <column xsi:type="varchar" name="status" nullable="false" length="16" default="pending"
+                comment="Delivery Status"/>
+        <column xsi:type="int" name="attempts" unsigned="true" nullable="false" default="0"
+                comment="Delivery Attempts"/>
+        <column xsi:type="timestamp" name="available_at" on_update="false" nullable="false"
+                default="CURRENT_TIMESTAMP" comment="Next Attempt At"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false"
+                default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="false" nullable="false"
+                default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <column xsi:type="timestamp" name="processed_at" on_update="false" nullable="true"
+                comment="Processed At"/>
+        <column xsi:type="text" name="last_error" nullable="true"
+                comment="Last Delivery Error"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="SMARTCUSTOMER_REVIEWS_OUTBOX_ORDER_ID">
+            <column name="order_id"/>
+        </constraint>
+        <index referenceId="SMARTCUSTOMER_REVIEWS_OUTBOX_STATUS_AVAILABLE_AT" indexType="btree">
+            <column name="status"/>
+            <column name="available_at"/>
+        </index>
+    </table>
+</schema>
