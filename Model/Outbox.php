@@ -76,13 +76,18 @@ class Outbox
         );
     }
 
-    public function getReadyIds($limit = self::BATCH_SIZE)
+    public function getReadyIds(array $storeIds, $limit = self::BATCH_SIZE)
     {
+        if (empty($storeIds)) {
+            return [];
+        }
+
         $connection = $this->_resource->getConnection();
         $select = $connection->select()
             ->from($this->getTableName(), ['entity_id'])
             ->where('status IN (?)', [self::STATUS_PENDING, self::STATUS_RETRY])
             ->where('available_at <= ?', gmdate('Y-m-d H:i:s'))
+            ->where('store_id IN (?)', array_map('intval', $storeIds))
             ->order('available_at ASC')
             ->order('entity_id ASC')
             ->limit((int) $limit);

@@ -57,7 +57,8 @@ class Sync extends Action
             $this->_sync->syncOrders([
                 'api_key'        => $apiKey,
                 'api_secret'    => urlencode($this->_dataHelper->encrypt($apiSecret, $storeId)),
-                'from'            => $from
+                'from'            => $from,
+                'store_id'        => $storeId
             ]);
             $resultRedirect->setPath('smartcustomer_reviews/index/index/store/' . $storeId);
         } catch (\Exception $e) {

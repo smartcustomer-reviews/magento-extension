@@ -2,6 +2,7 @@
 
 namespace SmartCustomer\Reviews\Cron;
 
+use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 use SmartCustomer\Reviews\Helper\Data;
 use SmartCustomer\Reviews\Helper\SyncOrders;
@@ -12,17 +13,20 @@ class ProcessOutbox
     protected $_dataHelper;
     protected $_logger;
     protected $_outbox;
+    protected $_storeManager;
     protected $_sync;
 
     public function __construct(
         Data $dataHelper,
         SyncOrders $sync,
         Outbox $outbox,
+        StoreManagerInterface $storeManager,
         LoggerInterface $logger
     ) {
         $this->_dataHelper = $dataHelper;
         $this->_sync = $sync;
         $this->_outbox = $outbox;
+        $this->_storeManager = $storeManager;
         $this->_logger = $logger;
     }
 
@@ -31,7 +35,7 @@ class ProcessOutbox
         try {
             $this->_outbox->recoverStaleDeliveries();
 
-            foreach ($this->_outbox->getReadyIds() as $entityId) {
+            foreach ($this->_outbox->getReadyIds($this->getDeliverableStoreIds()) as $entityId) {
                 $row = $this->_outbox->claim($entityId);
                 if (!$row) {
                     continue;
@@ -46,6 +50,26 @@ class ProcessOutbox
         }
     }
 
+    protected function getDeliverableStoreIds()
+    {
+        $storeIds = [];
+        foreach ($this->_storeManager->getStores() as $store) {
+            $storeId = (int) $store->getId();
+            if ($this->isDeliverable($storeId)) {
+                $storeIds[] = $storeId;
+            }
+        }
+
+        return $storeIds;
+    }
+
+    protected function isDeliverable($storeId)
+    {
+        return !empty($this->_dataHelper->getConfig('enabled', $storeId))
+            && !empty($this->_dataHelper->getConfig('api_key', $storeId))
+            && !empty($this->_dataHelper->getConfig('api_secret', $storeId));
+    }
+
     protected function deliver(array $row)
     {
         $entityId = (int) $row['entity_id'];
@@ -55,20 +79,12 @@ class ProcessOutbox
         try {
             $apiKey = $this->_dataHelper->getConfig('api_key', $storeId);
             $apiSecret = $this->_dataHelper->getConfig('api_secret', $storeId);
-            $enabled = $this->_dataHelper->getConfig('enabled', $storeId);
-
-            if (empty($enabled) || empty($apiKey) || empty($apiSecret)) {
-                $this->_outbox->markDiscarded(
-                    $entityId,
-                    'Integration is disabled or missing credentials for store ' . $storeId
-                );
-                return;
-            }
 
             $successful = $this->_sync->syncOrders([
                 'api_key' => $apiKey,
                 'api_secret' => urlencode($this->_dataHelper->encrypt($apiSecret, $storeId)),
-                'id' => $orderId
+                'id' => $orderId,
+                'store_id' => $storeId
             ]);
 
             if (!$successful) {
