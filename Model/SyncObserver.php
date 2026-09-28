@@ -43,6 +43,14 @@ class SyncObserver implements ObserverInterface
         
         $id = $order->getEntityId();
         
+        // Magento saves an order many times over its life: invoices, shipments,
+        // comments, admin edits. Only a status change is worth delivering again,
+        // so a repeat save must not rearm a delivery that already went out.
+        $previousStatus = $order->getOrigData('status');
+        if ($previousStatus !== null && $previousStatus === $order->getStatus()) {
+            return $this;
+        }
+        
         try {
             $this->_outbox->enqueue($id, $storeId);
         } catch (\Throwable $e) {

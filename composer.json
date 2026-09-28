@@ -1,18 +1,19 @@
 {
-	"name" : "sitejabber/module-reviews",
-	"description" : "SmartCustomer Reviews integration for Magento 2",
-	"type" : "magento2-module",
-	"license" : "OSL-3.0",
-	"require" : {
-		"ext-curl" : "*",
-		"ext-openssl" : "*"
-	},
-	"autoload" : {
-		"files" : [
-			"registration.php"
-		],
-		"psr-4" : {
-			"SmartCustomer\\Reviews\\" : ""
-		}
-	}
+  "name": "sitejabber/module-reviews",
+  "description": "SmartCustomer Reviews integration for Magento 2",
+  "version": "0.5.1",
+  "type": "magento2-module",
+  "license": "OSL-3.0",
+  "require": {
+    "ext-curl": "*",
+    "ext-openssl": "*"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "SmartCustomer\\Reviews\\": ""
+    }
+  }
 }

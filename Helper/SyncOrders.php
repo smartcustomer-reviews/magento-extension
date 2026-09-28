@@ -32,14 +32,18 @@ class SyncOrders extends AbstractHelper
             'api_key'        => null,
             'api_secret'    => null,
             'from'            => null,
-            'id'            => null
+            'id'            => null,
+            'store_id'        => null
         ];
-        if (empty($options['api_key']) || empty($options['api_secret']) || (empty($options['from']) && empty($options['id']))) {
+        if (empty($options['api_key']) || empty($options['api_secret']) || !is_numeric($options['store_id']) || (empty($options['from']) && empty($options['id']))) {
             return false;
         }
         
+        // Every store view carries its own credentials, so a sync must never
+        // reach past the store view it was started for.
         $collection = $this->_orderCollectionFactory->create()
-        ->addAttributeToSelect('*');
+        ->addAttributeToSelect('*')
+        ->addFieldToFilter('store_id', ['eq' => (int) $options['store_id']]);
         if (!empty($options['from']) && $this->_checkDate($options['from'])) {
             $collection->addFieldToFilter('created_at', ['gteq' => (new \DateTime($options['from']))->format('Y-m-d H:i:s')])
             ->addFieldToFilter('status', ['eq' => 'complete'])
@@ -65,9 +69,11 @@ class SyncOrders extends AbstractHelper
                 $createdDate->setTimezone($timezone);
             }
 
+            // Every amount below is the base (store) currency figure, so the
+            // currency code has to name the base currency too.
             $data = [
                 'created'    => $createdDate->format('c'),
-                'currency'    => $order->getOrderCurrencyCode(),
+                'currency'    => $order->getBaseCurrencyCode(),
                 'customer'    => [
                     'email'            => $order->getCustomerEmail(),
                     'first_name'    => $order->getCustomerFirstname(),
@@ -77,7 +83,7 @@ class SyncOrders extends AbstractHelper
                 'shipping'    => $order->getBaseShippingAmount(),
                 'status'    => $order->getStatus(),
                 'subtotal'    => $order->getBaseSubtotal(),
-                'tax'        => $order->getTaxAmount(),
+                'tax'        => $order->getBaseTaxAmount(),
                 'total'        => $order->getBaseGrandTotal()
             ];
 
