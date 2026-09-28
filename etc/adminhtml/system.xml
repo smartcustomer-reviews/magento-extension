@@ -10,7 +10,7 @@
 			<tab>sitejabber</tab>
 			<resource>SmartCustomer_Reviews::index</resource>
 			<group id="reviews" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-				<label><![CDATA[SmartCustomer Configurations <div style="float:right;margin:0 20px;font-weight:normal;line-height:23px;font-size:1.2rem;">ver. 0.5.0</div>]]></label>
+				<label><![CDATA[SmartCustomer Configurations <div style="float:right;margin:0 20px;font-weight:normal;line-height:23px;font-size:1.2rem;">ver. 0.5.1</div>]]></label>
 				<comment><![CDATA[
 					<p>To complete the installation, enter your Client ID and Client Encryption Key in the fields below and save your configuration.</p>
 						<p>If you need help, <a href="https://www.smartcustomer.com/business/contact" target="_blank" title="contact us">contact us</a> for assistance.</p>

@@ -53,7 +53,7 @@ bin/magento cache:flush
 ```
 
 The Composer package name is intentionally unchanged. Git tags determine the
-Composer version; the first tag for this source should be `v0.5.0` or `0.5.0`.
+Composer version; the first tag for this source should be `v0.5.1` or `0.5.1`.
 
 ## Configure
 

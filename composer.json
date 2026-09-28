@@ -1,7 +1,7 @@
 {
   "name": "sitejabber/module-reviews",
   "description": "SmartCustomer Reviews integration for Magento 2",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "type": "magento2-module",
   "license": "OSL-3.0",
   "require": {
