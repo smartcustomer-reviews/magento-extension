@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sales_order" resource="sales">
+        <column xsi:type="varchar" name="smartcustomer_locale" nullable="true" length="32"
+                comment="SmartCustomer Order Locale"/>
+    </table>
     <table name="smartcustomer_reviews_outbox" resource="default" engine="innodb"
            comment="SmartCustomer Reviews Order Outbox">
         <column xsi:type="bigint" name="entity_id" unsigned="true" nullable="false" identity="true"

@@ -1,4 +1,9 @@
 {
+    "sales_order": {
+        "column": {
+            "smartcustomer_locale": true
+        }
+    },
     "smartcustomer_reviews_outbox": {
         "column": {
             "entity_id": true,

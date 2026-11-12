@@ -45,6 +45,12 @@ class Success extends Template
         $domain = preg_replace('#https?://#', '', $this->_storeManager->getStore()->getBaseUrl());
         return trim($domain, '/');
     }
+
+    public function getLanguage(): string
+    {
+        $this->_getOrder();
+        return $this->_dataHelper->getLanguage($this->_order->getStoreId());
+    }
     
     public function getCustomerEmail()
     {

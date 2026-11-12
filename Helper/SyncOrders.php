@@ -74,6 +74,7 @@ class SyncOrders extends AbstractHelper
             $data = [
                 'created'    => $createdDate->format('c'),
                 'currency'    => $order->getBaseCurrencyCode(),
+                'locale'      => $this->_dataHelper->getOrderLocale($order),
                 'customer'    => [
                     'email'            => $order->getCustomerEmail(),
                     'first_name'    => $order->getCustomerFirstname(),

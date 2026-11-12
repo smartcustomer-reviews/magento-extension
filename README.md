@@ -53,7 +53,13 @@ bin/magento cache:flush
 ```
 
 The Composer package name is intentionally unchanged. Git tags determine the
-Composer version; the first tag for this source should be `v0.5.1` or `0.5.1`.
+Composer version; the tag for this source should be `v0.5.2` or `0.5.2`.
+
+Version 0.5.2 adds the nullable `smartcustomer_locale` column to `sales_order`.
+Run `bin/magento setup:upgrade` before accepting orders with the updated code.
+Existing orders are not backfilled; they use their store view's current locale
+when synced. New orders retain the locale saved when they were placed, even if
+the store view's locale changes before delivery or a historical sync.
 
 ## Configure
 
@@ -86,7 +92,9 @@ The order save observer makes a local database write only. It catches outbox
 write errors so an integration failure does not throw an exception from the
 observer. The checkout request does not wait for an HTTP request to
 SmartCustomer. Cron posts to `https://api.smartcustomer.com/v2/magento/orders`
-with the order ID, status, currency, customer name and email, and order totals.
+with the order ID, status, currency, customer name and email, order totals, and
+the order locale. SmartCustomer uses that locale to choose the review request
+language, with English as the fallback for unsupported or missing locales.
 It sends the configured Client ID and an encrypted form of the Client
 Encryption Key as API query parameters. Treat HTTP request logs and the
 configured key as sensitive.
@@ -109,6 +117,12 @@ SmartCustomer widget script. Product rating and review widgets also load that
 script when placed and enabled. These storefront features are separate from
 the cron order delivery path.
 
+Widgets use the store view's current locale. Supported widget languages are
+English, Arabic, Dutch, French, German, Italian, Polish, Spanish, Ukrainian,
+Japanese, Simplified Chinese, and Traditional Chinese. Unsupported or missing
+locales fall back to English. Japanese uses widget language code `jp`,
+Simplified Chinese uses `cn`, and Traditional Chinese uses `hk`.
+
 ## Check delivery
 
 `bin/magento module:status SmartCustomer_Reviews` checks whether the module is
@@ -122,9 +136,15 @@ ORDER BY entity_id DESC
 LIMIT 20;
 ```
 
-The test store in this project's parent repository bind mounts this module into
-`app/code/SmartCustomer/Reviews` and provides `magento/bin/test/unit` for the
-included unit tests.
+To run the included unit tests, install this checkout in a Magento development
+environment with Magento's test dependencies. From the Magento root, run:
+
+```bash
+vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist --no-extensions app/code/SmartCustomer/Reviews/Test/Unit
+```
+
+The suite covers store-scoped sync, outbox delivery, account connection state,
+order locale persistence and fallback, and widget language selection and output.
 
 ## License
 
