@@ -42,6 +42,11 @@ class Base extends Template implements BlockInterface
     {
         return Config::WIDGET_DOMAIN;
     }
+
+    public function getLanguage(): string
+    {
+        return $this->_sjHelper->getLanguage($this->_getStoreId());
+    }
     
     public function getWidgetDomain()
     {

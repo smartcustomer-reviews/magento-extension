@@ -12,6 +12,7 @@ use Magento\Store\Model\ScopeInterface;
 class Data extends AbstractHelper
 {
     const SMARTCUSTOMER_SETTINGS = 'sitejabber/reviews/';
+    const ORDER_LOCALE_FIELD = 'smartcustomer_locale';
 
     protected $_configWriter;
     protected $_cacheTypeList;
@@ -52,6 +53,36 @@ class Data extends AbstractHelper
 
         $this->_cacheTypeList->cleanType('config');
         $this->_cacheTypeList->cleanType('block_html');
+    }
+
+    public function getStoreLocale($storeId)
+    {
+        return $this->getConfig('code', $storeId, 'general/locale/');
+    }
+
+    public function getOrderLocale($order)
+    {
+        return $order->getData(self::ORDER_LOCALE_FIELD) ?? $this->getStoreLocale($order->getStoreId());
+    }
+
+    public function getLanguage($storeId): string
+    {
+        $locale = strtolower(str_replace('_', '-', trim((string)$this->getConfig('code', $storeId, 'general/locale/'))));
+        $parts = explode('-', $locale);
+        $language = $parts[0];
+        if ($language === 'zh') {
+            if (in_array('hant', $parts, true)) {
+                return 'hk';
+            }
+            if (in_array('hans', $parts, true)) {
+                return 'cn';
+            }
+            return array_intersect(['tw', 'hk', 'mo'], $parts) ? 'hk' : 'cn';
+        }
+        if ($language === 'ja') {
+            return 'jp';
+        }
+        return in_array($language, ['en', 'ar', 'nl', 'fr', 'de', 'it', 'pl', 'es', 'uk'], true) ? $language : 'en';
     }
     
     public function encrypt($string, $storeId = null)
